@@ -63,19 +63,19 @@ def predict(theta_start,theta_target, brain_number):
 def model_crossover(parent1, parent2):
   global brains
 
-  weight1 = brains[parent1].get_weights()  #it brings weights and biases
+  weight1 = brains[parent1].get_weights()                  #it brings weights and biases
                                            
   weight2 = brains[parent2].get_weights()  
 
   new_weight1 = weight1
   new_weight2 = weight2
   
-  gene = random.randint(0,len(new_weight1)-1) #we change a random weight
-  #print(gene,'gene------')
+  gene = random.randint(0,len(new_weight1)-1)              #we change a random weight
+  
   new_weight1[gene] = weight2[gene]
   new_weight2[gene] = weight1[gene]
   q=np.asarray([new_weight1,new_weight2],dtype=object)
-  #print(type(q))
+  
   return q 
 
 def model_mutate(weights,var):
