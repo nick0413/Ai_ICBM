@@ -58,13 +58,6 @@ def predict(theta_start,theta_target, brain_number):
     input=data
     output = brains[brain_number].predict(input, 200,verbose=0)
 
-
-
-    #input = np.asarray([phi_start,theta_start,phi_target,theta_target,t])
-    #input = np.atleast_2d(input)                        #this is mandatory because keras models need ndarrays, not 1darrays
-    #output = brains[brain_number].predict(input, 1)[0]  #second argument refers to batch size, we only have one set of data
-                                                        #we can only have a batch size of one
-
     return output #array of values predicted by the network
 
 def model_crossover(parent1, parent2):
