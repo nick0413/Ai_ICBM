@@ -94,7 +94,7 @@ def model_mutate(weights,var):
             
     return weights
 
-def start():# crea la primera generacion de modelos
+def start():# creates first model generation
     for i in range(total_brains):
         model = create_model()
         brains.append(model) 
