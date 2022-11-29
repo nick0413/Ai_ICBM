@@ -12,6 +12,9 @@ tmax=10000
 dt=0.5
 N=int(tmax/dt)
 
+'''
+El algoritmo genético de este código fue basado en: https://github.com/aiatuci/flappy_bird_workshop
+'''
 
 load_saved_pool = False
 save_brains = True
@@ -62,13 +65,7 @@ def predict(theta_start,theta_target, brain_number):
     input=data
     output = brains[brain_number].predict(input, 200,verbose=0)
 
-
-
-    #input = np.asarray([phi_start,theta_start,phi_target,theta_target,t])
-    #input = np.atleast_2d(input)                        #this is mandatory because keras models need ndarrays, not 1darrays
-    #output = brains[brain_number].predict(input, 1)[0]  #second argument refers to batch size, we only have one set of data
-                                                        #we can only have a batch size of one
-
+    
     return output #array of values predicted by the network
 
 def model_crossover(parent1, parent2):
@@ -116,7 +113,7 @@ def model_mutate(weights,var):
       
     return np.copy(weights)
 
-def start():# crea la primera generacion de modelos
+def start():                        # creates first model generation
     for i in range(total_brains):
         model = create_model()
         brains.append(model) 
@@ -190,7 +187,7 @@ def find_best_fit():
   return int(best_fit1),int(best_fit2)
 
 
-def cpp_sim():
+def cpp_sim(): #Tomadoo de: http://www.wgilpin.com/howto/howto_cython.html
 
 	process = subprocess.Popen("a.exe", shell=False)
 	
@@ -201,8 +198,6 @@ def cpp_sim():
 
 	process.kill() 
 	process.terminate()
-
-
 
 
 start() 
