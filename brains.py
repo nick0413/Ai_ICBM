@@ -101,9 +101,7 @@ def total_prediction(theta1,theta2):
   for i in range(total_brains):
     h=predict(theta1,theta2,i)
     resultados=np.append(resultados,h,axis=1)
-    #plt.plot(h)
-    #print(resultados.shape)
-    #plt.show()
+    
   resultados=resultados.T
   resultados=np.delete(resultados, np.s_[0:2], axis=0)
   return resultados
