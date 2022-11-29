@@ -37,8 +37,8 @@ def create_model():
     model.add(Activation('relu'))
     model.add(Dense(25, input_shape=(25,)))
     model.add(Activation('relu'))
-    model.add(Dense(2, input_shape=(25,)))    #one controls the power of the motors and the other the angle
-    model.add(Activation('tanh'))             #constraint the output to the range (-1,1)
+    model.add(Dense(2, input_shape=(25,)))      #one controls the power of the motors and the other the angle
+    model.add(Activation('tanh'))               #constraint the output to the range (-1,1)
 
     model.compile(loss='mse', optimizer='adam')  #it needs to be compiled even if we wont use gradient based optimization
 
