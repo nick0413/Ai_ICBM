@@ -16,13 +16,11 @@ N=int(tmax/dt)
 load_saved_pool = False
 save_brains = True
 brains = []
-fitness_t=[]
+fitness_t=[] #saves average fitness for each generation
 total_brains = 50
 update=True
 generation = 0
 
-highest_fitness = -1
-best_weights = []
 
 
 def save_pool():
@@ -40,9 +38,9 @@ def create_model():
     model.add(Dense(25, input_shape=(25,)))
     model.add(Activation('relu'))
     model.add(Dense(2, input_shape=(25,)))    #una neurona controla la potencia de los motores y la otra el angulo
-    model.add(Activation('tanh'))             #constraint the output to the range (0,1)
+    model.add(Activation('tanh'))             #constraint the output to the range (-1,1)
 
-    model.compile(loss='mse',optimizer='adam')  #it needs to be compiled even if we wont use gradient based optimization
+    model.compile(loss='mse', optimizer='adam')  #it needs to be compiled even if we wont use gradient based optimization
 
     return model
 
@@ -73,9 +71,8 @@ def model_crossover(parent1, parent2):
   global brains
 
   weight1 = brains[parent1].get_weights()  #it brings weights and biases
-                                              #model.get_weights()[0] are the wieghts 
-                                              #model.get_weights()[1] are the biases   
-  weight2 = brains[parent2].get_weights() 
+                                           
+  weight2 = brains[parent2].get_weights()  
 
   new_weight1 = weight1
   new_weight2 = weight2
@@ -88,28 +85,10 @@ def model_crossover(parent1, parent2):
   #print(type(q))
   return q 
 
-def crossover_brains(parent1, parent2):
-  global brains
-
-  weight1 = parent1.get_weights()  #it brings weights and biases
-                                              #model.get_weights()[0] are the wieghts 
-                                              #model.get_weights()[1] are the biases   
-  weight2 = parent2.get_weights() 
-
-  new_weight1 = weight1
-  new_weight2 = weight2
-
-  gene = random.randint(0,len(new_weight1)-1) #we change a random weight
-  #print(gene,'gene------')
-  new_weight1[gene] = weight2[gene]
-  new_weight2[gene] = weight1[gene]
-  q=np.asarray([new_weight1,new_weight2],dtype=object)
-  #print(type(q))
-  return q 
 def model_mutate(weights,var):
     for i in range(len(weights)):
         for j in range(len(weights[i])):
-            if( random.uniform(0,1) < 0.2): #learing rate of 15%
+            if( random.uniform(0,1) < 0.2): #learing rate of 20%
                 change = np.random.uniform(-var,var,weights[i][j].shape)
                 weights[i][j] += change
             
@@ -131,7 +110,7 @@ def total_prediction(theta1,theta2):
     resultados=np.append(resultados,h,axis=1)
     #plt.plot(h)
     #print(resultados.shape)
-  #plt.show()
+    #plt.show()
   resultados=resultados.T
   resultados=np.delete(resultados, np.s_[0:2], axis=0)
   return resultados
@@ -177,7 +156,7 @@ def find_best_fit():
   maxfit2=np.max(fitness)
   best_fit2=np.where(fitness==maxfit2)[0]
 
-  if len(best_fit1)>1:
+  if len(best_fit1)>1: 
     best_fit1=best_fit1[0]
   if len(best_fit2)>1:
     best_fit2=best_fit2[0]
@@ -201,9 +180,6 @@ def test_no_io():
 
 
 start() 
-best_brain=brains[0]
-best_brain2=brains[1]
-
 
 
 total_generations=100
