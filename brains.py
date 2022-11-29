@@ -121,10 +121,8 @@ def evolve(best_fit1,best_fit2):
     mutation1=model_mutate(cross_weights[0],0.5)
     mutation2=model_mutate(cross_weights[1],0.5)
 
-
     mutations.append(mutation1)
     mutations.append(mutation2)
-
 
   i=0
   for brain in brains:
